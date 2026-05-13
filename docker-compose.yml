@@ -1,0 +1,16 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: lfi-dashboard-backend
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: lfi-dashboard-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
