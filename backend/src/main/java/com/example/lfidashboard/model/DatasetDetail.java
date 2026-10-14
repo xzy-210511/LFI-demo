@@ -13,6 +13,11 @@ public record DatasetDetail(
         String status,
         LocalDateTime importedAt,
         String description,
-        List<String> availableOutputs
+        List<String> availableOutputs,
+        boolean hdf5Available,
+        Integer amplitudeFrameCount,
+        Integer phaseFrameCount,
+        Integer frameHeight,
+        Integer frameWidth
 ) {
 }
