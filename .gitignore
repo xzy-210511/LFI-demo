@@ -2,9 +2,11 @@ backend/target/
 frontend/node_modules/
 frontend/dist/
 .analysis-h5py/
+__pycache__/
 Mushroom/
 Mushroom.zip
 *.tsbuildinfo
 .idea/
 .vscode/
 *.log
+tmp/
