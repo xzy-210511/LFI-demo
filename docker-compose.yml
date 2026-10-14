@@ -1,10 +1,39 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: lfi-dashboard-postgres
+    environment:
+      POSTGRES_DB: lfi_dashboard
+      POSTGRES_USER: lfi_user
+      POSTGRES_PASSWORD: lfi_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lfi_user -d lfi_dashboard"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
   backend:
     build:
       context: ./backend
     container_name: lfi-dashboard-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/lfi_dashboard
+      SPRING_DATASOURCE_USERNAME: lfi_user
+      SPRING_DATASOURCE_PASSWORD: lfi_password
+      HDF5_PYTHON_COMMAND: python
+      HDF5_PROCESSOR_SCRIPT: tools/hdf5_processor.py
+      HDF5_CACHE_DIRECTORY: /app/data/hdf5-cache
     ports:
       - "8080:8080"
+    volumes:
+      - hdf5-cache:/app/data/hdf5-cache
 
   frontend:
     build:
@@ -14,3 +43,7 @@ services:
       - backend
     ports:
       - "5173:5173"
+
+volumes:
+  postgres-data:
+  hdf5-cache:
