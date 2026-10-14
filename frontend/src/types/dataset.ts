@@ -13,6 +13,11 @@ export interface DatasetSummary {
 export interface DatasetDetail extends DatasetSummary {
   description: string;
   availableOutputs: string[];
+  hdf5Available: boolean;
+  amplitudeFrameCount: number | null;
+  phaseFrameCount: number | null;
+  frameHeight: number | null;
+  frameWidth: number | null;
 }
 
 export interface MetadataItem {
@@ -20,10 +25,41 @@ export interface MetadataItem {
   value: string;
 }
 
-export interface SignalPoint {
-  x: number;
-  raw: number;
-  processed: number;
+export type ProfileDirection = 'row' | 'column';
+
+export interface FrameProfilePoint {
+  index: number;
+  amplitude: number | null;
+  phase: number | null;
+}
+
+export interface DataStatistics {
+  minimum: number;
+  maximum: number;
+  mean: number;
+  standardDeviation: number;
+  finiteCount: number;
+}
+
+export interface HistogramBin {
+  start: number;
+  end: number;
+  count: number;
+}
+
+export interface FrameAnalysis {
+  frameIndex: number;
+  amplitudeFrameName: string;
+  phaseFrameName: string;
+  frameHeight: number;
+  frameWidth: number;
+  direction: ProfileDirection;
+  position: number;
+  profilePoints: FrameProfilePoint[];
+  amplitudeStatistics: DataStatistics;
+  phaseStatistics: DataStatistics;
+  amplitudeHistogram: HistogramBin[];
+  phaseHistogram: HistogramBin[];
 }
 
 export interface ImportResult {

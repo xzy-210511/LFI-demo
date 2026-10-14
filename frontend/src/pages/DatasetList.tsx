@@ -53,7 +53,7 @@ export default function DatasetList() {
     <div className="page-stack">
       <section className="page-heading">
         <h2>Dataset List</h2>
-        <p>Browse mock LFI experiment datasets and open detailed metadata and signal views.</p>
+        <p>Browse LFI datasets and open their metadata and frame-based visualisations.</p>
       </section>
 
       <section className="toolbar">

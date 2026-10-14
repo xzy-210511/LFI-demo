@@ -41,7 +41,7 @@ export default function DashboardHome() {
           <h2>Manage LFI experiment files, outputs, and review-ready results.</h2>
           <p>
             A prototype dashboard for browsing Laser Feedback Interferometry datasets,
-            checking metadata, and previewing signal or image outputs.
+            checking metadata, and exploring amplitude and phase result frames.
           </p>
           <div className="hero-actions">
             <Link className="button primary" to="/datasets">Browse datasets</Link>
@@ -68,7 +68,7 @@ export default function DashboardHome() {
         <StatusCard label="Total Datasets" value={datasets.length} helper="Open the full dataset catalogue" to="/datasets" accent="blue" />
         <StatusCard label="Imported Files" value={importedCount} helper="Show imported datasets only" to="/datasets?status=IMPORTED" accent="green" />
         <StatusCard label="Processed Datasets" value={processedCount} helper="Show processed datasets only" to="/datasets?status=PROCESSED" accent="amber" />
-        <StatusCard label="Backend Status" value={health?.status ?? 'Unavailable'} helper={health?.service ?? 'Start the backend on port 8080'} to="/about" accent="slate" />
+        <StatusCard label="Backend Status" value={health?.status ?? 'Unavailable'} helper={health?.service ?? 'Start the backend on port 8080'} to="/login" accent="slate" />
       </div>
 
       <div className="dashboard-grid">
@@ -104,8 +104,8 @@ export default function DashboardHome() {
           <ol className="workflow-list">
             <li><span>1</span>Import `.h5` or `.hdf5` files</li>
             <li><span>2</span>Browse dataset summaries</li>
-            <li><span>3</span>Inspect metadata and signals</li>
-            <li><span>4</span>Preview amplitude and phase outputs later</li>
+            <li><span>3</span>Inspect metadata and frame profiles</li>
+            <li><span>4</span>Compare amplitude, phase, and combined outputs</li>
           </ol>
         </section>
       </div>

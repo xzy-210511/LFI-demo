@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { importDataset } from '../api/datasetApi';
 import type { ImportResult } from '../types/dataset';
 
@@ -32,13 +33,14 @@ export default function ImportDataset() {
     <div className="page-stack">
       <section className="page-heading">
         <h2>Import Dataset</h2>
-        <p>This MVP only validates and uploads the file. Real HDF5 parsing will be implemented in a later stage.</p>
+        <p>Upload a mushroom HDF5 result file to extract frame metadata and generate amplitude, phase, and combined THz visualisations.</p>
       </section>
 
       <section className="panel import-panel">
-        <label>
-          HDF5 file
+        <label className="file-picker">
+          <span>HDF5 file</span>
           <input
+            className="file-input"
             type="file"
             accept=".h5,.hdf5"
             onChange={(event) => {
@@ -47,6 +49,10 @@ export default function ImportDataset() {
               setError('');
             }}
           />
+          <span className="file-control" aria-hidden="true">
+            <span className="file-button">Choose File</span>
+            <span className="file-name">{selectedFile?.name ?? 'No file selected'}</span>
+          </span>
         </label>
         <button className="button primary" type="button" onClick={handleUpload} disabled={uploading}>
           {uploading ? 'Uploading...' : 'Upload Dataset'}
@@ -55,7 +61,8 @@ export default function ImportDataset() {
 
       {result && (
         <p className="notice success">
-          {result.message} Mock dataset ID: {result.datasetId}. File: {result.fileName}.
+          {result.message} Dataset ID: {result.datasetId}. File: {result.fileName}.{' '}
+          <Link to={`/datasets/${result.datasetId}`}>View dataset</Link>
         </p>
       )}
       {error && <p className="notice error">{error}</p>}
