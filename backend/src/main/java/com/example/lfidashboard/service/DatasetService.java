@@ -50,7 +50,9 @@ public class DatasetService {
                 dataset.getAmplitudeFrameCount(),
                 dataset.getPhaseFrameCount(),
                 dataset.getFrameHeight(),
-                dataset.getFrameWidth()
+                dataset.getFrameWidth(),
+                dataset.getFileSize(),
+                dataset.getSha256()
         );
     }
 

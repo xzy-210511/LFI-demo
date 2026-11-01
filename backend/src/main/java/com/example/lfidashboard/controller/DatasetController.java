@@ -3,13 +3,17 @@ package com.example.lfidashboard.controller;
 import com.example.lfidashboard.model.DatasetDetail;
 import com.example.lfidashboard.model.DatasetSummary;
 import com.example.lfidashboard.model.FrameAnalysis;
+import com.example.lfidashboard.model.IntegrityReport;
 import com.example.lfidashboard.model.MetadataItem;
+import com.example.lfidashboard.service.DatasetLifecycleService;
 import com.example.lfidashboard.service.DatasetService;
 import com.example.lfidashboard.service.Hdf5VisualisationService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,10 +26,16 @@ public class DatasetController {
 
     private final DatasetService datasetService;
     private final Hdf5VisualisationService visualisationService;
+    private final DatasetLifecycleService lifecycleService;
 
-    public DatasetController(DatasetService datasetService, Hdf5VisualisationService visualisationService) {
+    public DatasetController(
+            DatasetService datasetService,
+            Hdf5VisualisationService visualisationService,
+            DatasetLifecycleService lifecycleService
+    ) {
         this.datasetService = datasetService;
         this.visualisationService = visualisationService;
+        this.lifecycleService = lifecycleService;
     }
 
     @GetMapping
@@ -41,6 +51,17 @@ public class DatasetController {
     @GetMapping("/{id}/metadata")
     public List<MetadataItem> getDatasetMetadata(@PathVariable Long id) {
         return datasetService.getMetadata(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDataset(@PathVariable Long id) {
+        lifecycleService.deleteDataset(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/integrity")
+    public IntegrityReport verifyIntegrity(@PathVariable Long id) {
+        return lifecycleService.verifyIntegrity(id);
     }
 
     @GetMapping("/{id}/frames/{frame}/analysis")

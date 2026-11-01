@@ -38,6 +38,9 @@ public class DatasetEntity {
     private Integer frameHeight;
     private Integer frameWidth;
 
+    @Column(name = "sha256", length = 64)
+    private String sha256;
+
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "phase_preview", columnDefinition = "bytea")
     private byte[] phasePreview;
@@ -127,6 +130,10 @@ public class DatasetEntity {
         return frameWidth;
     }
 
+    public String getSha256() {
+        return sha256;
+    }
+
     public byte[] getPhasePreview() {
         return phasePreview;
     }
@@ -161,6 +168,10 @@ public class DatasetEntity {
 
     public void setFrameWidth(Integer frameWidth) {
         this.frameWidth = frameWidth;
+    }
+
+    public void setSha256(String sha256) {
+        this.sha256 = sha256;
     }
 
     public void setPhasePreview(byte[] phasePreview) {

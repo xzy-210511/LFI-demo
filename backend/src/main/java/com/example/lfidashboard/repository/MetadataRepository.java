@@ -8,4 +8,6 @@ import java.util.List;
 public interface MetadataRepository extends JpaRepository<MetadataEntity, Long> {
 
     List<MetadataEntity> findByDatasetIdOrderById(Long datasetId);
+
+    void deleteByDatasetId(Long datasetId);
 }

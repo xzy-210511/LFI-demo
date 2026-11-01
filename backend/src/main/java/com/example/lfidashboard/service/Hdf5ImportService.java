@@ -14,6 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,9 +51,11 @@ public class Hdf5ImportService {
 
         try {
             temporaryFile = Files.createTempFile("lfi-upload-", ".hdf5");
-            try (var input = file.getInputStream()) {
+            MessageDigest digest = Sha256.newDigest();
+            try (var input = new DigestInputStream(file.getInputStream(), digest)) {
                 Files.copy(input, temporaryFile, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
             }
+            String sha256 = Sha256.hex(digest);
 
             Hdf5Summary summary = hdf5ProcessorService.readSummary(temporaryFile);
             byte[] amplitudePreview = hdf5ProcessorService.generateImage(temporaryFile, 0, "amplitude");
@@ -70,6 +74,7 @@ public class Hdf5ImportService {
             );
             dataset.setHdf5ObjectId(largeObjectId);
             dataset.setFileSize(file.getSize());
+            dataset.setSha256(sha256);
             dataset.setAmplitudeFrameCount(summary.amplitudeFrameCount());
             dataset.setPhaseFrameCount(summary.phaseFrameCount());
             dataset.setFrameHeight(summary.frameHeight());
@@ -82,6 +87,7 @@ public class Hdf5ImportService {
             metadataRepository.saveAll(List.of(
                     new MetadataEntity(savedDataset, "source_file", originalFileName),
                     new MetadataEntity(savedDataset, "file_size_bytes", String.valueOf(file.getSize())),
+                    new MetadataEntity(savedDataset, "sha256", sha256),
                     new MetadataEntity(savedDataset, "amplitude_frame_count", String.valueOf(summary.amplitudeFrameCount())),
                     new MetadataEntity(savedDataset, "phase_frame_count", String.valueOf(summary.phaseFrameCount())),
                     new MetadataEntity(savedDataset, "frame_height", String.valueOf(summary.frameHeight())),

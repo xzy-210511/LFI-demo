@@ -4,11 +4,14 @@ import com.example.lfidashboard.entity.DatasetEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+
+import static org.springframework.http.HttpStatus.CONFLICT;
 
 @Service
 public class Hdf5FileCacheService {
@@ -39,11 +42,29 @@ public class Hdf5FileCacheService {
 
             Path partialFile = cacheDirectory.resolve("dataset-" + dataset.getId() + ".part");
             Files.deleteIfExists(partialFile);
-            largeObjectStorageService.copyTo(dataset.getHdf5ObjectId(), partialFile);
+            String restoredSha256 = largeObjectStorageService.copyTo(dataset.getHdf5ObjectId(), partialFile);
+            // Every restore from PostgreSQL is checked against the checksum recorded at upload time.
+            // Cache hits are not re-hashed so that frame requests stay fast.
+            if (dataset.getSha256() != null && !dataset.getSha256().equalsIgnoreCase(restoredSha256)) {
+                Files.deleteIfExists(partialFile);
+                throw new ResponseStatusException(
+                        CONFLICT,
+                        "Stored HDF5 file failed SHA-256 verification for dataset " + dataset.getId() + "."
+                );
+            }
             Files.move(partialFile, cachedFile, StandardCopyOption.REPLACE_EXISTING);
             return cachedFile;
         } catch (IOException exception) {
             throw new IllegalStateException("Unable to prepare the cached HDF5 source file.", exception);
+        }
+    }
+
+    public synchronized void evict(Long datasetId) {
+        try {
+            Files.deleteIfExists(cacheDirectory.resolve("dataset-" + datasetId + ".hdf5"));
+            Files.deleteIfExists(cacheDirectory.resolve("dataset-" + datasetId + ".part"));
+        } catch (IOException exception) {
+            throw new IllegalStateException("Unable to remove cached HDF5 file for dataset " + datasetId + ".", exception);
         }
     }
 

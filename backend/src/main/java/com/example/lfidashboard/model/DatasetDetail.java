@@ -18,6 +18,8 @@ public record DatasetDetail(
         Integer amplitudeFrameCount,
         Integer phaseFrameCount,
         Integer frameHeight,
-        Integer frameWidth
+        Integer frameWidth,
+        Long fileSize,
+        String sha256
 ) {
 }
