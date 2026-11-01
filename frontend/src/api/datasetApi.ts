@@ -5,6 +5,7 @@ import type {
   FrameAnalysis,
   HealthStatus,
   ImportResult,
+  IntegrityReport,
   MetadataItem,
   ProfileDirection
 } from '../types/dataset';
@@ -33,6 +34,14 @@ export function getFrameAnalysis(
 ): Promise<FrameAnalysis> {
   const query = new URLSearchParams({ direction, position: String(position) });
   return apiRequest<FrameAnalysis>(`/api/datasets/${id}/frames/${frame}/analysis?${query}`);
+}
+
+export function deleteDataset(id: string): Promise<void> {
+  return apiRequest<void>(`/api/datasets/${id}`, { method: 'DELETE' });
+}
+
+export function verifyDatasetIntegrity(id: string): Promise<IntegrityReport> {
+  return apiRequest<IntegrityReport>(`/api/datasets/${id}/integrity`, { method: 'POST' });
 }
 
 export function importDataset(file: File): Promise<ImportResult> {

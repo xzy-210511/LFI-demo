@@ -18,6 +18,19 @@ export interface DatasetDetail extends DatasetSummary {
   phaseFrameCount: number | null;
   frameHeight: number | null;
   frameWidth: number | null;
+  fileSize: number | null;
+  sha256: string | null;
+}
+
+export type IntegrityStatus = 'VERIFIED' | 'MISMATCH' | 'BASELINE_RECORDED';
+
+export interface IntegrityReport {
+  datasetId: number;
+  status: IntegrityStatus;
+  recordedSha256: string;
+  storedSha256: string;
+  fileSizeBytes: number;
+  checkedAt: string;
 }
 
 export interface MetadataItem {

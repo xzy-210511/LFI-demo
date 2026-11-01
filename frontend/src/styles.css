@@ -537,6 +537,33 @@ tr:last-child td {
   color: #253542;
 }
 
+.button.danger {
+  background: #ffffff;
+  border-color: #e3a397;
+  color: #9b2e1b;
+}
+
+.button.danger:hover:not(:disabled) {
+  background: #fff1ee;
+}
+
+.integrity-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.info-grid .wide {
+  grid-column: 1 / -1;
+}
+
+.checksum {
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 0.86rem;
+  overflow-wrap: anywhere;
+}
+
 .notice {
   margin: 0;
   padding: 13px 15px;

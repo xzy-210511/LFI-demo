@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import DataIntegrityPanel from '../components/DataIntegrityPanel';
 import FrameProfileCharts from '../components/FrameProfileCharts';
 import FrameStatisticsPanel from '../components/FrameStatisticsPanel';
 import HistogramCharts from '../components/HistogramCharts';
@@ -31,6 +32,7 @@ const initialSelection: FrameSelection = { frame: 0, direction: 'row', position:
 
 export default function DatasetDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [dataset, setDataset] = useState<DatasetDetailType | null>(null);
   const [metadata, setMetadata] = useState<MetadataItem[]>([]);
   const [analysis, setAnalysis] = useState<FrameAnalysis | null>(null);
@@ -180,6 +182,8 @@ export default function DatasetDetail() {
           )}
         </dl>
       </section>
+
+      <DataIntegrityPanel dataset={dataset} onDeleted={() => navigate('/datasets')} />
 
       <MetadataPanel metadata={metadata} />
 
