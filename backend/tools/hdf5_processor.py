@@ -1,4 +1,5 @@
 import json
+import re
 import sys
 
 import h5py
@@ -6,8 +7,13 @@ import numpy as np
 from PIL import Image
 
 
+def natural_key(name):
+    # "2" sorts before "10", so unpadded frame names keep their numeric order.
+    return [int(part) if part.isdigit() else part for part in re.split(r"(\d+)", name)]
+
+
 def frame_name(group, frame_index):
-    names = sorted(group.keys())
+    names = sorted(group.keys(), key=natural_key)
     if frame_index < 0 or frame_index >= len(names):
         raise ValueError(f"Frame index is out of range: {frame_index}")
     return names[frame_index]

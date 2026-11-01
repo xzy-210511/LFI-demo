@@ -73,6 +73,19 @@ class Hdf5ProcessorTest(unittest.TestCase):
         self.assertEqual(sum(item["count"] for item in analysis["amplitudeHistogram"]), 12)
         self.assertEqual(sum(item["count"] for item in analysis["phaseHistogram"]), 12)
 
+    def test_unpadded_frame_names_keep_numeric_order(self):
+        unpadded_file = Path(self.temporary_directory.name) / "unpadded.hdf5"
+        with h5py.File(unpadded_file, "w") as hdf5_file:
+            for group_name in ("amplitude", "phase"):
+                group = hdf5_file.create_group(group_name)
+                for index in range(12):
+                    group.create_dataset(str(index), data=np.full((2, 2), float(index)))
+
+        analysis = self.capture_json(hdf5_processor.analyze, unpadded_file, 2, "row", 0, 5)
+
+        self.assertEqual(analysis["amplitudeFrameName"], "2")
+        self.assertEqual(analysis["amplitudeStatistics"]["mean"], 2.0)
+
 
 if __name__ == "__main__":
     unittest.main()
