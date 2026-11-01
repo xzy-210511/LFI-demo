@@ -138,30 +138,38 @@ Or run:
 | Method | Endpoint | Purpose |
 | --- | --- | --- |
 | GET | `/api/health` | Check whether the backend is running |
-| GET | `/api/datasets` | Return mock LFI dataset summaries |
-| GET | `/api/datasets/{id}` | Return detail information for one dataset |
-| GET | `/api/datasets/{id}/metadata` | Return key-value metadata for one dataset |
-| GET | `/api/datasets/{id}/signals` | Return mock raw and processed signal points |
-| POST | `/api/datasets/import` | Validate and accept a mock `.h5` or `.hdf5` upload |
+| GET | `/api/datasets` | List dataset summaries |
+| GET | `/api/datasets/{id}` | Dataset detail, frame counts, dimensions, file size and SHA-256 |
+| GET | `/api/datasets/{id}/metadata` | Extracted key-value metadata |
+| POST | `/api/datasets/import` | Validate an `.h5`/`.hdf5` upload, record its SHA-256, generate frame-0 previews and store the file |
+| DELETE | `/api/datasets/{id}` | Delete the record, its metadata, the stored Large Object and the cached file |
+| POST | `/api/datasets/{id}/integrity` | Re-read the stored file from PostgreSQL and compare its SHA-256 with the upload checksum |
+| GET | `/api/datasets/{id}/frames/{frame}/analysis` | Row/column profile (`direction`, `position`), statistics and 32-bin histograms |
+| GET | `/api/datasets/{id}/frames/{frame}/amplitude-image` | Amplitude PNG |
+| GET | `/api/datasets/{id}/frames/{frame}/phase-image` | Phase PNG |
+| GET | `/api/datasets/{id}/frames/{frame}/combined-image` | Combined THz PNG (hue = phase, saturation = amplitude) |
 
 The import endpoint accepts `multipart/form-data` with the field name `file`.
 
-## Current MVP Limitations
+Every restore of a stored file into the HDF5 cache is checked against the SHA-256 recorded at upload. A mismatch
+returns HTTP 409 and the restored copy is discarded. Datasets imported before checksums existed get a baseline
+recorded the first time `/integrity` is called.
 
-- No real database yet
-- No real HDF5 parsing yet
-- Mock metadata and signal data are used
-- Image/result display is currently placeholder only
-- No authentication
-- No Docker setup
-- No cloud deployment setup
+## Tests
 
-## Next Development Steps
+```powershell
+# Python HDF5 processor (needs h5py, numpy, Pillow)
+cd backend/tools
+python -m unittest test_hdf5_processor -v
 
-1. Analyse real mushroom HDF5 file structure
-2. Design PostgreSQL schema
-3. Implement real HDF5 import module
-4. Store extracted data in PostgreSQL
-5. Replace mock APIs with database-backed APIs
-6. Add amplitude and phase image display
-7. Add comparison and annotation features if time allows
+# Java services, using the same Maven image as the Docker build
+docker run --rm -v "${PWD}/backend:/app" -v lfi-maven-repo:/root/.m2 -w /app maven:3.9.9-eclipse-temurin-17 mvn -B test
+```
+
+## Current Limitations
+
+- Login, registration and profile pages are browser-only prototypes, not secure authentication
+- No participant-based usability study yet
+- Response times were measured on one local machine only; no load testing
+- Physical axis units and spacing are not stored in the supplied files, so profiles use sample indices
+- Expected HDF5 structure: `amplitude` and `phase` groups of matching 2-D frames
