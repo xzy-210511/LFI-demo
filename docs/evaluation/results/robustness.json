@@ -1,0 +1,164 @@
+{
+ "lo_before": 2,
+ "cases": [
+  {
+   "case": "wide_200x700",
+   "import_status": 200,
+   "import_message": "HDF5 file stored in PostgreSQL and the first visualisation frame was generated.",
+   "detail": {
+    "amplitudeFrameCount": 5,
+    "phaseFrameCount": 5,
+    "frameHeight": 200,
+    "frameWidth": 700
+   },
+   "checks": {
+    "combined_last_frame": 200,
+    "analysis_last_frame": {
+     "status": 200,
+     "points": 200,
+     "frame_name": "0004",
+     "finite_amp": 140000,
+     "hist_total": 140000
+    }
+   }
+  },
+  {
+   "case": "int32_512x512",
+   "import_status": 200,
+   "import_message": "HDF5 file stored in PostgreSQL and the first visualisation frame was generated.",
+   "detail": {
+    "amplitudeFrameCount": 4,
+    "phaseFrameCount": 4,
+    "frameHeight": 512,
+    "frameWidth": 512
+   },
+   "checks": {
+    "combined_last_frame": 200,
+    "analysis_last_frame": {
+     "status": 200,
+     "points": 512,
+     "frame_name": "0003",
+     "finite_amp": 262144,
+     "hist_total": 262144
+    }
+   }
+  },
+  {
+   "case": "float32_nan_inf",
+   "import_status": 200,
+   "import_message": "HDF5 file stored in PostgreSQL and the first visualisation frame was generated.",
+   "detail": {
+    "amplitudeFrameCount": 3,
+    "phaseFrameCount": 3,
+    "frameHeight": 60,
+    "frameWidth": 40
+   },
+   "checks": {
+    "combined_last_frame": 200,
+    "analysis_last_frame": {
+     "status": 200,
+     "points": 60,
+     "frame_name": "0002",
+     "finite_amp": 2199,
+     "hist_total": 2199
+    }
+   }
+  },
+  {
+   "case": "unpadded_names",
+   "import_status": 200,
+   "import_message": "HDF5 file stored in PostgreSQL and the first visualisation frame was generated.",
+   "detail": {
+    "amplitudeFrameCount": 12,
+    "phaseFrameCount": 12,
+    "frameHeight": 20,
+    "frameWidth": 30
+   },
+   "checks": {
+    "combined_last_frame": 200,
+    "analysis_last_frame": {
+     "status": 200,
+     "points": 20,
+     "frame_name": "11",
+     "finite_amp": 600,
+     "hist_total": 600
+    },
+    "frame_index_2": {
+     "frame_name": "2",
+     "mean": 2.0
+    }
+   }
+  },
+  {
+   "case": "three_d_frames",
+   "import_status": 500,
+   "import_message": "HDF5 processor failed: Traceback (most recent call last):\n  File \"/app/tools/hdf5_processor.py\", line 250, in <module>\n    main()\n  File \"/app/tools/hdf5_processor.py\", line 232, i"
+  },
+  {
+   "case": "missing_phase",
+   "import_status": 500,
+   "import_message": "HDF5 processor failed: Traceback (most recent call last):\n  File \"/app/tools/hdf5_processor.py\", line 250, in <module>\n    main()\n  File \"/app/tools/hdf5_processor.py\", line 232, i"
+  },
+  {
+   "case": "shape_mismatch",
+   "import_status": 500,
+   "import_message": "HDF5 processor failed: Traceback (most recent call last):\n  File \"/app/tools/hdf5_processor.py\", line 250, in <module>\n    main()\n  File \"/app/tools/hdf5_processor.py\", line 232, i"
+  },
+  {
+   "case": "unequal_counts",
+   "import_status": 200,
+   "import_message": "HDF5 file stored in PostgreSQL and the first visualisation frame was generated.",
+   "detail": {
+    "amplitudeFrameCount": 10,
+    "phaseFrameCount": 8,
+    "frameHeight": 20,
+    "frameWidth": 30
+   },
+   "checks": {
+    "combined_last_frame": 200,
+    "analysis_last_frame": {
+     "status": 200,
+     "points": 20,
+     "frame_name": "0007",
+     "finite_amp": 600,
+     "hist_total": 600
+    },
+    "amplitude_frame_9": 200,
+    "combined_frame_9": 400
+   }
+  },
+  {
+   "case": "varying_shapes",
+   "import_status": 200,
+   "import_message": "HDF5 file stored in PostgreSQL and the first visualisation frame was generated.",
+   "detail": {
+    "amplitudeFrameCount": 2,
+    "phaseFrameCount": 2,
+    "frameHeight": 100,
+    "frameWidth": 100
+   },
+   "checks": {
+    "combined_last_frame": 200,
+    "analysis_last_frame": {
+     "status": 200,
+     "points": 50,
+     "frame_name": "0001",
+     "finite_amp": 4000,
+     "hist_total": 4000
+    },
+    "frame1_row75": {
+     "status": 500,
+     "message": "HDF5 processor failed: Traceback (most recent call last):\n  File \"/app/tools/hdf5_processor.py\", line 250, in <module>\n    main()\n  File \"/app/tools/hdf5_proces"
+    },
+    "frame1_image": 200
+   }
+  },
+  {
+   "case": "not_hdf5",
+   "import_status": 500,
+   "import_message": "HDF5 processor failed: Traceback (most recent call last):\n  File \"/app/tools/hdf5_processor.py\", line 250, in <module>\n    main()\n  File \"/app/tools/hdf5_processor.py\", line 232, i"
+  }
+ ],
+ "lo_after_import": 8,
+ "lo_after_delete": 2
+}

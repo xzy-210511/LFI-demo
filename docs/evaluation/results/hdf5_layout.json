@@ -1,0 +1,98 @@
+{
+ "p1": {
+  "file_attrs": 0,
+  "groups": [
+   "amplitude",
+   "phase"
+  ],
+  "open_s": 0.0044,
+  "amplitude_group_attrs": 0,
+  "amplitude_frame0": {
+   "shape": [
+    1300,
+    400
+   ],
+   "dtype": "float64",
+   "chunks": [
+    1300,
+    400
+   ],
+   "compression": "gzip",
+   "level": 9,
+   "shuffle": false,
+   "fletcher32": false,
+   "chunk0_bytes": 879022
+  },
+  "amplitude_dataset_attrs_total": 0,
+  "phase_group_attrs": 0,
+  "phase_frame0": {
+   "shape": [
+    1300,
+    400
+   ],
+   "dtype": "float64",
+   "chunks": [
+    1300,
+    400
+   ],
+   "compression": "gzip",
+   "level": 9,
+   "shuffle": false,
+   "fletcher32": false,
+   "chunk0_bytes": 1603828
+  },
+  "phase_dataset_attrs_total": 0,
+  "raw_bytes": 4609280000,
+  "stored_bytes": 1377865986,
+  "compression_ratio": 3.35,
+  "single_frame_read_median_ms": 12.8
+ },
+ "mm3a": {
+  "file_attrs": 0,
+  "groups": [
+   "amplitude",
+   "phase"
+  ],
+  "open_s": 0.0012,
+  "amplitude_group_attrs": 0,
+  "amplitude_frame0": {
+   "shape": [
+    1300,
+    400
+   ],
+   "dtype": "float64",
+   "chunks": [
+    1300,
+    400
+   ],
+   "compression": "gzip",
+   "level": 9,
+   "shuffle": false,
+   "fletcher32": false,
+   "chunk0_bytes": 1136276
+  },
+  "amplitude_dataset_attrs_total": 0,
+  "phase_group_attrs": 0,
+  "phase_frame0": {
+   "shape": [
+    1300,
+    400
+   ],
+   "dtype": "float64",
+   "chunks": [
+    1300,
+    400
+   ],
+   "compression": "gzip",
+   "level": 9,
+   "shuffle": false,
+   "fletcher32": false,
+   "chunk0_bytes": 1603960
+  },
+  "phase_dataset_attrs_total": 0,
+  "raw_bytes": 7479680000,
+  "stored_bytes": 2363192766,
+  "compression_ratio": 3.17,
+  "single_frame_read_median_ms": 15.0
+ }
+}
