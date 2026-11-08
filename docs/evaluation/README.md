@@ -12,7 +12,7 @@ context is in [`../thesis_evidence_2026-11-01.md`](../thesis_evidence_2026-11-01
 |---|---|---|---|---|
 | HDF5 storage layout | §2.4 | `hdf5_layout.py` | `python docs/evaluation/hdf5_layout.py Mushroom docs/evaluation/results/hdf5_layout.json` | `results/hdf5_layout.json` |
 | Cross-frame statistics | §6.6, Figure 18 | `cross_frame.py` | `python docs/evaluation/cross_frame.py Mushroom docs/thesis_figures` | `../thesis_figures/cross_frame_stats.json`, `../thesis_figures/fig_new_cross_frame.png` |
-| Robustness imports | §6.5, Table 20 | `robustness.py` | `python docs/evaluation/robustness.py <workDir>` | `results/robustness.json` |
+| Robustness imports | §6.5, Table 20 | `robustness.py` | `python docs/evaluation/robustness.py <workDir>` | `<workDir>/out/robustness.json` (reported run: `results/robustness.json`) |
 | Endpoint timing medians | §6.8, Table 23 | `endpoint_timing.sh` | `bash docs/evaluation/endpoint_timing.sh 7 p1` and `... 5 mm3a` | thesis Table 23 |
 | Concurrent load test | §6.8, Table 24, Figure 19 | `loadtest.py` | `python docs/evaluation/loadtest.py docs/evaluation/results/loadtest.json` | `results/loadtest.json` |
 | Processor cost per request | §6.8 | `processor_timing.py` | `docker exec -i lfi-dashboard-backend python - < docs/evaluation/processor_timing.py` | thesis §6.8 |
