@@ -8,14 +8,14 @@ Environment for the reported runs (1 November 2026): Windows 11, Intel Core Ultr
 Java 17, Python 3.12 with h5py 3.16). Host-side scripts use Python 3.12 with h5py, NumPy and Matplotlib. Further
 context is in [`../thesis_evidence_2026-11-01.md`](../thesis_evidence_2026-11-01.md).
 
-| Experiment | Thesis location | Script | Command (from the repository root) | Raw output |
+| Experiment | Thesis location | Script | Command (from the repository root) | Result location |
 |---|---|---|---|---|
 | HDF5 storage layout | §2.4 | `hdf5_layout.py` | `python docs/evaluation/hdf5_layout.py Mushroom docs/evaluation/results/hdf5_layout.json` | `results/hdf5_layout.json` |
 | Cross-frame statistics | §6.6, Figure 18 | `cross_frame.py` | `python docs/evaluation/cross_frame.py Mushroom docs/thesis_figures` | `../thesis_figures/cross_frame_stats.json`, `../thesis_figures/fig_new_cross_frame.png` |
 | Robustness imports | §6.5, Table 20 | `robustness.py` | `python docs/evaluation/robustness.py <workDir>` | `<workDir>/out/robustness.json` (reported run: `results/robustness.json`) |
-| Endpoint timing medians | §6.8, Table 23 | `endpoint_timing.sh` | `bash docs/evaluation/endpoint_timing.sh 7 p1` and `... 5 mm3a` | thesis Table 23 |
+| Endpoint timing medians | §6.8, Table 23 | `endpoint_timing.sh` | `bash docs/evaluation/endpoint_timing.sh 7 p1` and `... 5 mm3a` | `results/endpoint_timing_p1.txt`, `results/endpoint_timing_mm3a.txt` (all five runs per endpoint) |
 | Concurrent load test | §6.8, Table 24, Figure 19 | `loadtest.py` | `python docs/evaluation/loadtest.py docs/evaluation/results/loadtest.json` | `results/loadtest.json` |
-| Processor cost per request | §6.8 | `processor_timing.py` | `docker exec -i lfi-dashboard-backend python - < docs/evaluation/processor_timing.py` | thesis §6.8 |
+| Processor cost per request | §6.8 | `processor_timing.py` | `docker exec -i lfi-dashboard-backend python - < docs/evaluation/processor_timing.py` | thesis §6.8 only (summary; no raw log was kept) |
 
 ## Definitions and conditions
 
@@ -34,6 +34,8 @@ context is in [`../thesis_evidence_2026-11-01.md`](../thesis_evidence_2026-11-01
   `/frames/{n}/combined-image`. Latency is the client-side time from sending the request to reading the complete
   response; throughput is requests divided by the wall time of the run. The client runs on the same machine.
 - **Endpoint timing.** Five sequential `curl` requests per endpoint; the median of `time_total` is reported.
+  The last row of Table 23, the first frame request after the cache file was removed, was recorded with a one-off
+  command; its output is `results/cold_cache_first_request.txt`.
 - **Processor cost.** Five runs of each command inside the backend container on frame 300 of the cached mm3a file.
   The values in §6.8 (0.216 s start-up and imports; 0.299 s analysis; 0.312 s amplitude image; 0.607 s phase image)
   were measured on 1 November 2026 with an equivalent one-off loop; this script reproduces that measurement.

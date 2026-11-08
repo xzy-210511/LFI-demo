@@ -1,0 +1,9 @@
+p1 | Health                                 | median 0.005593 s | runs 0.005593 0.006711 0.004770 0.006164 0.004738
+p1 | Dataset list                           | median 0.039889 s | runs 0.039889 0.055264 0.046691 0.034901 0.018451
+p1 | Dataset detail                         | median 0.014672 s | runs 0.020713 0.014365 0.013235 0.014672 0.018371
+p1 | Frame analysis (frame 0, row 650)      | median 0.282897 s | runs 0.321947 0.264170 0.282897 0.319145 0.281015
+p1 | Frame-zero amplitude preview           | median 0.013001 s | runs 0.015099 0.012533 0.012767 0.013010 0.013001
+p1 | Dynamic amplitude image, frame 1       | median 0.298861 s | runs 0.319905 0.298861 0.274878 0.337907 0.288856
+p1 | Dynamic phase image, frame 1           | median 0.573033 s | runs 0.580038 0.543129 0.570995 0.573033 0.652607
+p1 | Dynamic combined image, frame 1        | median 0.455120 s | runs 0.446632 0.504791 0.455120 0.433161 0.463321
+p1 | Integrity check (full re-read)         | median 4.485459 s | runs 5.276067 4.867825 4.485459 4.328202 4.332867
